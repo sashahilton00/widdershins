@@ -1,0 +1,13 @@
+{{ data.responses = data.utils.getResponses(data); }}
+{{ data.responseSchemas = false; }}
+{{~ data.responses :response }}
+{{ if (response.content) data.responseSchemas = true; }}
+{{~}}
+{{? data.responseSchemas }}
+{{ responseExamples = data.utils.getResponseExamplesProtocol(data); }}
+{{? responseExamples && responseExamples.length > 0 }}
+<CodeGroup title='Response'>
+{{= responseExamples }}
+</CodeGroup>
+{{?}}
+{{?}}

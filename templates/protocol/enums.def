@@ -1,0 +1,17 @@
+{{ var enumsObj = {}; for (var e of enums) { enumsObj[e.name] = { values: [], description: e.description ? e.description : null } }; }}
+{{ for (var e of enums) { enumsObj[e.name].values.push(data.utils.toPrimitive(e.value)) }; }}
+
+<Properties>
+{{ for (var e in enumsObj ) { }}
+<Property name='{{=e}}' type='enum'>
+    {{? e.description }}{{= e.description }}{{?}}
+    <Table title="Possible Enum Values">
+    {{~ enumsObj[e].values :value}}
+        <TableRow>
+            <TableValue>`{{=value}}`</TableValue>
+        </TableRow>
+    {{~}}
+    </Table>
+</Property>
+{{ }; }}
+</Properties>

@@ -1,0 +1,62 @@
+export const description = '{{? data.resource.description }}{{= data.resource.description}}{{?}}';
+
+# {{= data.resource.title }}
+
+{{? data.resource.description }}{{= data.resource.description}}{{?}}
+
+{{? data.resource.externalDocs}}
+<a href="{{=data.resource.externalDocs.url}}">{{=data.resource.externalDocs.description||'External documentation'}}</a>
+{{?}}
+
+{{ /* }}
+## The attachment model
+
+The attachment model contains all the information about the files you send to your contacts and groups, including the name, type, and size.
+
+### Properties
+
+<Properties>
+  <Property name="id" type="string">
+    Unique identifier for the attachment.
+  </Property>
+  <Property name="message_id" type="string">
+    Unique identifier for the message associated with the attachment.
+  </Property>
+  <Property name="filename" type="string">
+    The filename for the attachment.
+  </Property>
+  <Property name="file_url" type="string">
+    The URL for the attached file.
+  </Property>
+  <Property name="file_type" type="string">
+    The MIME type of the attached file.
+  </Property>
+  <Property name="file_size" type="integer">
+    The file size of the attachment in bytes.
+  </Property>
+  <Property name="created_at" type="timestamp">
+    Timestamp of when the attachment was created.
+  </Property>
+</Properties>
+{{ */ }}
+
+{{ for (var m in data.resource.methods) { }}
+{{ /* >operation:{{= data.resource.methods[m].path }}/{{= data.resource.methods[m].verb }} */}}
+
+{{ data.operationUniqueName = m; }}
+{{ data.method = data.resource.methods[m]; }}
+{{ data.operationUniqueSlug = data.method.slug; }}
+{{ data.operation = data.method.operation; }}
+
+{{ data.methodUpper = data.method.verb.toUpperCase(); }}
+{{ data.url = data.utils.slashes(data.baseUrl + data.method.path); }}
+{{ data.parameters = data.operation.parameters; }}
+{{ data.enums = []; }}
+{{ data.utils.fakeProdCons(data); }}
+{{ data.utils.fakeBodyParameter(data); }}
+{{ data.utils.mergePathParameters(data); }}
+{{ data.utils.getParameters(data); }}
+
+{{= data.templates.operation(data) }}
+{{ /* >endoperation */}}
+{{ } /* of methods */ }}

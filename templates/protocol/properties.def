@@ -1,0 +1,21 @@
+{{? block.rows && block.rows.length }}
+<Properties>
+    {{~ block.rows :p}}
+    <Property name="{{= p.displayName }}" type="{{= p.safeType }}" {{? p.required}} required={true}{{?}} {{? p.restrictions}}restrictions="{{= p.restrictions }}"{{?}}>
+        {{? p.description }}{{= p.description }}{{?}}
+        {{? p.schema.enum && p.schema.enum.length }}
+        {{ enumValues = p.schema.enum.filter(e => { if (e) return e}); }}
+        <Table title="Possible Enum Values">
+        {{~ enumValues :e}}
+            {{? e.length }}
+            <TableRow>
+                <TableValue>`{{= e }}`</TableValue>
+            </TableRow>
+            {{?}}
+        {{~}}
+        </Table>
+        {{?}}
+    </Property>
+    {{~}}
+</Properties>
+{{?}}
