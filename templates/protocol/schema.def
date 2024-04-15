@@ -37,12 +37,6 @@
     {{? (blocks[0].rows.length === 0) && (blocks.length === 1) }}
     *None*
     {{?}}
-    
-    {{? enums.length > 0 }}
-    ### Enumerated Values
-
-    {{#def.enums }}
-    {{?}}
     </Col>
 
     <Col>
